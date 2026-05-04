@@ -1,0 +1,142 @@
+---
+import { Image } from 'astro:assets';
+import { categories } from '../lib/categories';
+import {
+  formatDate,
+  getLetterUrl,
+  getWeekLabel,
+  type MonthArchive,
+} from '../lib/letters';
+
+interface Props {
+  archive?: MonthArchive;
+}
+
+const { archive } = Astro.props;
+const letters = archive?.letters ?? [];
+const selectedWeek = letters[0] ? getWeekLabel(letters[0]) : 'Week';
+const categoryCounts = new Map<string, number>();
+
+for (const letter of letters) {
+  categoryCounts.set(letter.data.category, (categoryCounts.get(letter.data.category) ?? 0) + 1);
+}
+---
+
+<section class="monthly-letters" data-monthly-letters>
+  <aside class="month-rail" aria-label="Letters navigation">
+    <div class="month-card">
+      <p class="rail-label">Letters</p>
+      <h1>{archive?.label ?? 'No letters yet'}</h1>
+      <strong>{selectedWeek}</strong>
+      <p>
+        {letters.length > 0
+          ? `${letters.length}개의 개발레터가 이 달에 기록되어 있어요.`
+          : '아직 공개된 개발레터가 없습니다.'}
+      </p>
+    </div>
+
+    <nav class="month-pagination" aria-label="Month pagination">
+      {
+        archive?.previous ? (
+          <a href={archive.previous.path}>← {archive.previous.label}</a>
+        ) : (
+          <span aria-disabled="true">← Previous</span>
+        )
+      }
+      {
+        archive?.next ? (
+          <a href={archive.next.path}>{archive.next.label} →</a>
+        ) : (
+          <span aria-disabled="true">Next →</span>
+        )
+      }
+    </nav>
+
+    <div class="category-filter" aria-label="Category filter">
+      <p class="rail-label">Category</p>
+      <button type="button" data-filter="all" aria-pressed="true">
+        All <span>{letters.length}</span>
+      </button>
+      {
+        categories.map((category) => (
+          <button
+            type="button"
+            data-filter={category.slug}
+            aria-pressed="false"
+            disabled={!categoryCounts.has(category.slug)}
+          >
+            {category.label} <span>{categoryCounts.get(category.slug) ?? 0}</span>
+          </button>
+        ))
+      }
+    </div>
+  </aside>
+
+  <div class="month-content">
+    <header class="month-heading">
+      <p class="rail-label">Monthly archive</p>
+      <h2>{archive?.label ?? 'Letters'}</h2>
+      <p>한 달의 기록을 주차별로 훑어보고, 필요한 관점만 골라 읽을 수 있습니다.</p>
+    </header>
+
+    <ol class="issue-list">
+      {
+        letters.map((letter) => (
+          <li data-letter-item data-category={letter.data.category}>
+            <article class="issue-preview">
+              {letter.data.cover && (
+                <a href={getLetterUrl(letter)} class="issue-image-link" aria-label={`${letter.data.title} 읽기`}>
+                  <Image
+                    src={letter.data.cover}
+                    alt={letter.data.coverAlt ?? ''}
+                    class="issue-cover"
+                    loading="lazy"
+                  />
+                </a>
+              )}
+              <div class="issue-body">
+                <p class="issue-meta">
+                  {getWeekLabel(letter)} · Issue {letter.data.issue} · {formatDate(letter.data.publishedAt)}
+                </p>
+                <h3><a href={getLetterUrl(letter)}>{letter.data.title}</a></h3>
+                <p>{letter.data.summary}</p>
+                <a href={getLetterUrl(letter)} class="read-link">레터 읽기</a>
+              </div>
+            </article>
+          </li>
+        ))
+      }
+    </ol>
+
+    <p class="empty filtered-empty" hidden>선택한 카테고리에 해당하는 레터가 없습니다.</p>
+  </div>
+</section>
+
+<script>
+  for (const root of document.querySelectorAll('[data-monthly-letters]')) {
+    const buttons = Array.from(root.querySelectorAll('[data-filter]'));
+    const items = Array.from(root.querySelectorAll('[data-letter-item]'));
+    const empty = root.querySelector('.filtered-empty');
+
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => {
+        if (button.hasAttribute('disabled')) return;
+
+        const filter = button.getAttribute('data-filter');
+        let visibleCount = 0;
+
+        buttons.forEach((entry) => entry.setAttribute('aria-pressed', String(entry === button)));
+
+        items.forEach((item) => {
+          const shouldShow = filter === 'all' || item.getAttribute('data-category') === filter;
+          item.toggleAttribute('hidden', !shouldShow);
+          if (shouldShow) visibleCount += 1;
+        });
+
+        if (empty) {
+          empty.toggleAttribute('hidden', visibleCount !== 0);
+        }
+      });
+    });
+  }
+</script>

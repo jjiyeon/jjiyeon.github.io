@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import UnderConstruction from '../../../components/UnderConstruction.astro';
+import { getAvailableMonths, getPublishedLetters } from '../../../lib/letters';
+
+// import MonthlyLetters from '../../../components/MonthlyLetters.astro';
+// import { getMonthArchive } from '../../../lib/letters';
+
+export async function getStaticPaths() {
+  const letters = await getPublishedLetters();
+
+  return getAvailableMonths(letters).map((month) => ({
+    params: {
+      year: month.year,
+      month: month.month,
+    },
+  }));
+}
+
+// const { year = '', month = '' } = Astro.params;
+// const archive = getMonthArchive(await getPublishedLetters(), year, month);
+---
+
+<BaseLayout
+  title="Letters"
+  description="Summer가 매주 남기는 개발레터입니다."
+>
+  <UnderConstruction />
+  <!-- <MonthlyLetters archive={archive} /> -->
+</BaseLayout>

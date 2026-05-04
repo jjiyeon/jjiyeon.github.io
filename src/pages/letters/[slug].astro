@@ -1,0 +1,63 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import UnderConstruction from '../../components/UnderConstruction.astro';
+import { getPublishedLetters, type Letter } from '../../lib/letters';
+
+// import { render } from 'astro:content';
+// import { Image } from 'astro:assets';
+// import { getCategory } from '../../lib/categories';
+// import { formatDate } from '../../lib/letters';
+
+export async function getStaticPaths() {
+  const letters = await getPublishedLetters();
+
+  return letters.map((letter) => ({
+    params: { slug: letter.data.letterSlug },
+    props: { letter },
+  }));
+}
+
+interface Props {
+  letter: Letter;
+}
+
+// const { letter } = Astro.props;
+// const { Content } = await render(letter);
+// const category = getCategory(letter.data.category);
+---
+
+<BaseLayout
+  title="Letters"
+  description="Summer가 매주 남기는 개발레터입니다."
+>
+  <UnderConstruction />
+  <!--
+  <article class="letter-detail">
+    <header class="letter-header">
+      <p class="eyebrow">Issue {letter.data.issue}</p>
+      <h1>{letter.data.title}</h1>
+      <p class="subtitle">{letter.data.subtitle}</p>
+      <p class="issue-meta">
+        {formatDate(letter.data.publishedAt)} · {letter.data.week} · {category?.label}
+      </p>
+      <p>{letter.data.summary}</p>
+      <ul class="tag-row" aria-label="Tags">
+        {letter.data.tags.map((tag) => <li><span>#{tag}</span></li>)}
+      </ul>
+      {
+        letter.data.cover && (
+          <Image
+            src={letter.data.cover}
+            alt={letter.data.coverAlt ?? ''}
+            class="letter-hero-image"
+            loading="eager"
+          />
+        )
+      }
+    </header>
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+  -->
+</BaseLayout>
