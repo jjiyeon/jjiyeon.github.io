@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">Summer's Dev Letter cover</title>
+  <desc id="desc">A minimal abstract cover for a weekly development letter.</desc>
+  <rect width="1200" height="720" fill="#f5f1e8" />
+  <path d="M120 128h960v464H120z" fill="#fffdf8" stroke="#d8d0c2" stroke-width="2" />
+  <path d="M190 210h360M190 266h250M190 322h540" fill="none" stroke="#26352f" stroke-width="16" stroke-linecap="round" />
+  <path d="M190 430h820M190 486h660" fill="none" stroke="#93b8aa" stroke-width="12" stroke-linecap="round" />
+  <circle cx="905" cy="258" r="86" fill="#2f6f61" opacity="0.92" />
+  <path d="M852 259h106M905 206v106" fill="none" stroke="#fffaf0" stroke-width="14" stroke-linecap="round" />
+  <path d="M120 592h960" stroke="#d8d0c2" stroke-width="2" />
+</svg>
+

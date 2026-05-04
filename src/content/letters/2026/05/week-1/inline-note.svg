@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" role="img" aria-labelledby="title desc">
+  <title id="title">Weekly letter structure note</title>
+  <desc id="desc">A simple diagram showing weekly work, thoughts, learning, and notes.</desc>
+  <rect width="960" height="420" rx="20" fill="#fffdf8" />
+  <rect x="46" y="48" width="868" height="324" rx="18" fill="#f8f5ef" stroke="#ded8cc" stroke-width="2" />
+  <path d="M120 124h180M120 178h250M120 232h210M120 286h280" fill="none" stroke="#26352f" stroke-width="12" stroke-linecap="round" />
+  <path d="M530 120h260M530 176h180M530 232h250M530 288h210" fill="none" stroke="#2f6f61" stroke-width="12" stroke-linecap="round" />
+  <circle cx="438" cy="206" r="34" fill="#93b8aa" />
+  <path d="M438 144v124M386 206h104" stroke="#fffaf0" stroke-width="10" stroke-linecap="round" />
+</svg>
+
