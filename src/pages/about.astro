@@ -1,0 +1,332 @@
+---
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const profileImage = '/about/IMG_6775.jpg';
+const hasProfileImage = existsSync(join(process.cwd(), 'public/about/IMG_6775.jpg'));
+
+type WorkProject = { title: string; body: string };
+type WorkEntry = {
+  company: string;
+  role: string;
+  period: string;
+  initial: string;
+  logo: string | null;
+  description?: string;
+  highlights?: string[];
+  projects: WorkProject[];
+};
+
+const work: WorkEntry[] = [
+  {
+    company: '(주)북아이피스',
+    role: '프론트엔드 리드',
+    period: '2024.02 — 현재',
+    initial: '북',
+    logo: '/about/logos/solvook.svg',
+    description:
+      '교육 콘텐츠 플랫폼에서 결제, 콘텐츠, 브랜딩, 모바일 앱 전환 흐름을 중심으로 프론트엔드 구조를 개선했으며, 프론트엔드 리드로서 4~5명 규모의 팀에서 기술 기준 정립과 마켓의 핵심 기능 개발을 함께 담당했습니다.',
+    highlights: [
+      '프론트엔드 팀에서 코드 리뷰, 기술 기준 정립, 일정/리소스 조율 담당',
+      'MUI 기반 스타일 구조를 Tailwind와 공통 컴포넌트 중심으로 점진적으로 재정리',
+      '상품, 할인, 결제 상태를 공통 모델로 정리하고 UI·상태·PG 연동 로직의 책임을 분리',
+      '리스크가 큰 기능은 상태별 예외 케이스와 QA 시나리오를 사전에 정의해 변경 범위와 검수 기준 명확화',
+      'Lexical 기반 콘텐츠 작성 흐름, 저자 브랜딩 기능, Android 앱 MVP 등 핵심 사용자 흐름 개선',
+    ],
+    projects: [
+      {
+        title: '쏠북 앱 — 학생 전환 유도를 위한 안드로이드 앱 MVP',
+        body: '학생 사용자의 재방문과 구매 전환을 반복적으로 유도할 채널이 필요해 Expo 기반 Android 앱을 직접 개발해 Play Store에 출시했습니다. 카카오 로그인, 무료 체험 자료 열람, Firebase 푸시 메시지를 연결해 설치–가입–자료 열람–푸시 재방문으로 이어지는 모바일 전환 퍼널을 구축했고, 출시 직후 10일간 신규 설치 1,285명 중 첫 사용자 1,248명(약 97%), 그중 1,235명이 홈에 진입(약 99%)했습니다. 사용자 체감 비정상 종료율은 약 0.10%로 MVP 초기 안정성을 확인했습니다.',
+      },
+      {
+        title: '쏠북 마켓 — 결제 도메인 구조 통합 및 Toss PG 전환',
+        body: '상품 유형(교과서·자료·패키지·이용권·POD·PDF)마다 결제 페이지와 정책 분기가 흩어져 있어, 신규 상품·할인·결제 수단을 추가할 때마다 여러 화면을 개별 수정해야 하는 구조였습니다. 상품·할인·포인트·결제 상태를 통합하는 공통 결제 모델을 설계해 분리돼 있던 결제 페이지를 하나의 checkout 흐름으로 묶고, PortOne에 맞춰져 있던 결제 요청/응답 처리를 상품별 UI와 분리해 Toss PG 전환 시의 화면별 수정 범위를 좁혔습니다. 결제 이후 주문 내역, 영수증, 이용권 차감, 자료 열람, PDF 다운로드, 제본 주문까지 같은 결제 상태로 이어지도록 후속 화면 흐름을 정리했습니다.',
+      },
+      {
+        title: '저자 브랜드 홈 및 콘텐츠 운영 기능 개선',
+        body: '자료 판매 중심에서 저자 중심 마켓플레이스로 확장할 수 있도록 저자 소개·자료 라인업·공지/Q&A를 한 곳에서 보여주는 브랜드 홈을 설계·개발했습니다. Lexical 기반 에디터로 공지·콘텐츠 작성 흐름을 단순화하고, 모바일에서도 저자 정보·자료 목록·소식받기 CTA가 자연스럽게 이어지도록 반응형 UI를 정리했습니다. 도입 이후 브랜드 저자 수 44 → 68(+54.5%), 누적 공지 +172.5%, Q&A +128.8%, 소식받기 +67.1% 증가했습니다.',
+      },
+      {
+        title: '디자인 시스템 및 스타일 구조 개선',
+        body: 'MUI 커스텀, styled-components 레거시, 신규 스타일이 섞여 컴포넌트별 예외 처리가 늘어나던 구조를 Tailwind 기반 공통 컴포넌트 중심으로 점진적으로 전환했습니다. Radix headless 컴포넌트로 Dialog·Popover의 동작과 스타일 책임을 분리하고, 버튼·입력·모달·드롭다운을 variant 기준으로 정리해 Storybook에서 상태와 사용 기준을 확인할 수 있게 만들었습니다. 화면별 임시 스타일을 추가하기보다 공통 컴포넌트를 확장하는 방식으로 UI 변경이 이어지는 구조를 마련했습니다.',
+      },
+    ],
+  },
+  {
+    company: '엔포트버스 주식회사',
+    role: '프론트엔드',
+    period: '2022.10 — 2024.02',
+    initial: '엔',
+    logo: '/about/logos/enportbus.png',
+    projects: [
+      {
+        title: '옵션 게임 차트 및 베팅 UI 구현',
+        body: '옵션 게임 화면에서 과거 가격 데이터, 실시간 가격, 라운드 시점, 사용자의 베팅 위치를 하나의 차트로 보여줘야 했습니다. Chart.js의 annotation 한계를 풀기 위해 Highcharts로 전환해 현재 가격·베팅 위치·라운드 시작/종료 지점을 차트 위 annotation으로 표시하고, 과거 가격을 초기 points로 둔 뒤 실시간 가격 응답을 이어 붙이는 흐름을 구현했습니다. Highcharts annotation 타입을 확장해 TypeScript 환경에서 커스텀 annotation을 안전하게 다룰 수 있도록 보완했습니다.',
+      },
+    ],
+  },
+  {
+    company: '(주)브리즘',
+    role: '프론트엔드 · 백엔드',
+    period: '2019.01 — 2021.04',
+    initial: '브',
+    logo: '/about/logos/vrism.png',
+    projects: [
+      {
+        title: '3D 리소스 운영 CMS 구축',
+        body: '3D 모델링 파일과 메타데이터가 여러 경로에 분산되어 있던 상황에서, CMS 요구사항을 기준으로 DB 스키마와 API 명세를 함께 정리해 프론트엔드와 백엔드를 병렬로 개발할 수 있는 데이터 계약을 만들었습니다. 파일 업로드와 관리 기능을 공통 모듈로 구성하고, 3D 리소스를 S3 기반으로 일원화해 모델·브랜드·계정을 하나의 CMS에서 관리할 수 있는 운영 체계를 구축했습니다.',
+      },
+    ],
+  },
+];
+
+const skills = [
+  'TypeScript',
+  'React',
+  'Next.js',
+  'TanStack Query',
+  'Zustand',
+  'Emotion',
+  'Tailwind CSS',
+  'MUI',
+  'Storybook',
+  'React Native (Expo)',
+  'WebView',
+  'Firebase',
+];
+
+const linkClass =
+  'inline-flex items-center gap-1.5 px-3.5 py-1.5 border border-line rounded-full text-sm font-semibold no-underline bg-white hover:bg-soft hover:border-neutral-300 transition-colors';
+
+const iconLinkClass =
+  'inline-flex items-center justify-center w-9 h-9 border border-line rounded-full no-underline bg-white text-ink hover:bg-soft hover:border-neutral-300 transition-colors';
+
+type Activity = {
+  title: string;
+  period: string;
+  body: string;
+  tags?: string[];
+};
+
+const activities: Activity[] = [
+  {
+    title: 'ETHSeoul 2023',
+    period: '2023.04',
+    body: 'ETHSeoul 2023 해커톤에 출품해 수상한 POM Web3 Dapp입니다. Next.js 기반으로 친구 목록, 채팅, 프로필 페이지를 구현했고, Zustand로 클라이언트 상태를 셋업하고 ethers 기반 스마트 컨트랙트 호출을 화면 단에 연결했습니다.',
+    tags: ['TypeScript', 'Next.js', 'Zustand', 'Emotion', 'ethers'],
+  },
+  {
+    title: 'HI BIBLE',
+    period: '2021.11 — 현재',
+    body: '어린이 예배 콘텐츠를 다루는 운영자용 관리자 페이지입니다. 단독으로 개발해 지금까지 서비스되고 있고, Next.js + Redux Toolkit + redux-saga 기반으로 회차·파일·언어 CRUD, 페이지네이션, 공개/비공개 토글, PDF 업로드 결과 처리 흐름을 만들었습니다.',
+    tags: ['TypeScript', 'Next.js', 'Redux Toolkit', 'redux-saga', 'styled-components', 'react-hook-form'],
+  },
+];
+---
+
+<BaseLayout
+  title="About"
+  description="복잡한 결제, 콘텐츠, 실시간 데이터 흐름을 구조화해온 프론트엔드 개발자 엄지연의 이력과 프로젝트입니다."
+>
+  <div class="max-w-[720px] mx-auto py-16 pb-24 sm:py-12 sm:pb-18">
+    <section class="grid grid-cols-1 sm:grid-cols-[minmax(0,1fr)_auto] items-start gap-5 sm:gap-8 pb-8">
+      <div class="order-2 sm:order-1">
+        <h1 class="m-0 text-3xl sm:text-4xl font-bold leading-tight tracking-tight wrap-break-word">
+          사용자와 팀의 맥락을 살피고,<br /> 필요한 정보를 정리해 제품이 앞으로 <br />나아가게 합니다.
+        </h1>
+        <p class="mt-4 text-base text-muted leading-[1.7]">
+          안녕하세요, 프론트엔드 개발자 엄지연입니다. 저는 요즘 시대에도 결국 중요한 것은
+          함께 문제를 이해하고, 기준을 맞추고, 끝까지 제품을 완성해가는 협업의 힘이라고
+          생각합니다. 좋은 결과는 작은 빈틈을 꾸준히 메우는 과정에서 만들어진다고 믿고,
+          동료들이 더 안정적으로 일할 수 있는 흐름을 만드는 데 관심이 많습니다.
+        </p>
+        <div class="flex flex-wrap gap-2 mt-5" aria-label="Profile links">
+          <a class={iconLinkClass} href="mailto:ejy1105@gmail.com" aria-label="Email">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-[18px] h-[18px]"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <rect width="20" height="16" x="2" y="4" rx="2" />
+              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+            </svg>
+          </a>
+          <a
+            class={iconLinkClass}
+            href="https://github.com/jjiyeon"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-[18px] h-[18px]"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+              <path d="M9 18c-4.51 2-5-2-7-2" />
+            </svg>
+          </a>
+          <a
+            class={iconLinkClass}
+            href="https://www.linkedin.com/in/jiyeon-um-370218166/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-[18px] h-[18px]"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+              <rect width="4" height="12" x="2" y="9" />
+              <circle cx="4" cy="4" r="2" />
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div
+        class="order-1 sm:order-2 w-24 h-24 sm:w-24 sm:h-24 max-sm:w-[84px] max-sm:h-[84px] rounded-full overflow-hidden border border-line bg-soft shrink-0"
+        aria-label="profile image"
+      >
+        {
+          hasProfileImage ? (
+            <img src={profileImage} alt="profile" class="w-full h-full object-cover" />
+          ) : (
+            <span class="grid place-items-center w-full h-full text-3xl font-bold text-muted">엄</span>
+          )
+        }
+      </div>
+    </section>
+    <section class="py-7">
+      <h2 class="m-0 mb-4 text-[1.35rem] font-bold tracking-tight">Skills</h2>
+      <ul class="list-none m-0 p-0 flex flex-wrap gap-2">
+        {
+          skills.map((skill) => (
+            <li class="px-[11px] py-[5px] bg-soft rounded-full text-[0.85rem] text-ink">{skill}</li>
+          ))
+        }
+      </ul>
+    </section>
+    <section class="py-7">
+      <h2 class="m-0 mb-4 text-[1.35rem] font-bold tracking-tight">Works</h2>
+      <ul class="list-none m-0 p-0 grid gap-10">
+        {
+          work.map((item) => (
+            <li class="grid gap-[22px]">
+              <div class="grid grid-cols-[48px_minmax(0,1fr)_auto] items-center gap-4 max-sm:grid-cols-[44px_minmax(0,1fr)] max-sm:[grid-template-areas:'logo_info''logo_period'] max-sm:items-start max-sm:gap-x-[14px] max-sm:gap-y-[2px]">
+                <div
+                  class:list={[
+                    'grid place-items-center w-12 h-12 max-sm:w-11 max-sm:h-11 rounded-full overflow-hidden border border-line text-base max-sm:text-[1rem] font-bold text-ink max-sm:[grid-area:logo] max-sm:self-start',
+                    item.logo ? 'bg-white' : 'bg-soft',
+                  ]}
+                  aria-hidden="true"
+                >
+                  {item.logo ? (
+                    <img src={item.logo} alt="" class="w-[64%] h-[64%] object-contain" />
+                  ) : (
+                    <span>{item.initial}</span>
+                  )}
+                </div>
+                <div class="min-w-0 max-sm:[grid-area:info]">
+                  <strong class="block text-base font-bold tracking-[-0.005em]">{item.company}</strong>
+                  <p class="mt-0.5 m-0 text-[0.92rem] text-muted">{item.role}</p>
+                </div>
+                <span class="text-[0.86rem] max-sm:text-[0.8rem] text-muted whitespace-nowrap tabular-nums max-sm:[grid-area:period]">
+                  {item.period}
+                </span>
+              </div>
+              {(item.description || (item.highlights && item.highlights.length > 0)) && (
+                <div class="pl-16 max-sm:pl-0 grid gap-3">
+                  {item.description && (
+                    <p class="m-0 text-[0.95rem] text-ink leading-[1.7]">{item.description}</p>
+                  )}
+                  {item.highlights && item.highlights.length > 0 && (
+                    <ul class="m-0 pl-5 list-disc text-[0.93rem] text-ink leading-[1.7] grid gap-1">
+                      {item.highlights.map((highlight) => (
+                        <li>{highlight}</li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              )}
+              {item.projects.length > 0 && (
+                <ul class="list-none m-0 pl-16 max-sm:pl-0 grid gap-[22px]">
+                  {item.projects.map((project) => (
+                    <li class="grid gap-1.5">
+                      <h4 class="m-0 text-[0.98rem] font-bold tracking-[-0.005em] leading-snug">{project.title}</h4>
+                      <p class="m-0 text-[0.93rem] text-ink leading-[1.7]">{project.body}</p>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="py-7">
+      <h2 class="m-0 mb-4 text-[1.35rem] font-bold tracking-tight">Activities</h2>
+      <ul class="list-none m-0 p-0 grid gap-7">
+        {
+          activities.map((act) => (
+            <li class="grid grid-cols-[140px_minmax(0,1fr)] gap-6 max-sm:grid-cols-1 max-sm:gap-2">
+              <div class="min-w-0">
+                <strong class="block text-[0.95rem] font-bold tracking-tight">{act.title}</strong>
+                <p class="mt-1 m-0 text-[0.83rem] text-muted tabular-nums">{act.period}</p>
+              </div>
+              <div class="min-w-0 grid gap-3">
+                <p class="m-0 text-[0.93rem] text-ink leading-[1.7]">{act.body}</p>
+                {act.tags && act.tags.length > 0 && (
+                  <ul class="list-none m-0 p-0 flex flex-wrap gap-1.5">
+                    {act.tags.map((tag) => (
+                      <li class="px-2 py-0.5 bg-soft rounded-full text-[0.78rem] text-muted">{tag}</li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="text-center pt-14 pb-6">
+      <div class="flex flex-col items-center border border-line rounded-lg p-6">
+
+        <p class="inline-block m-0 mb-3 text-[0.78rem] font-bold tracking-[0.08em] uppercase text-muted">Contact</p>
+        <h2 class="m-0 mx-auto mb-3 max-w-[520px] text-[1.4rem] sm:text-[1.7rem] font-bold leading-[1.4]">
+          현재 새로운 기회를 찾고 있습니다.
+        </h2>
+        <p class="m-0 text-muted">확인 후, 빠르게 연락드리겠습니다.</p>
+        <a
+          class="inline-block mt-[22px] px-[26px] py-3 rounded-full text-[0.95rem] no-underline text-white bg-ink"
+          href="mailto:ejy1105@gmail.com"
+        >
+          ejy1105@gmail.com
+        </a>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
